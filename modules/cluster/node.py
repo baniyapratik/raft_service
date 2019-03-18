@@ -1,18 +1,20 @@
 class Node:
     isAlive = True
-    nodeId = 0
 
-    def __init__(self, host, port):
-        global nodeId
+    def __init__(self, host, port, nodeId):
         self.host = host
         self.port = port
-        self.nodeId = ++nodeId
+        self.state = None
+        self.nodeId = nodeId
 
     def getHost(self):
         return self.host
 
     def setHost(self, host):
         self.host = host
+
+    def setState(self, state):
+        self.state = state
 
     def getPort(self):
         return self.port

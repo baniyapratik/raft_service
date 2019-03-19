@@ -5,6 +5,7 @@ from time import time, ctime, sleep
 HBPORT = 43278
 CHECKWAIT = 30
 
+
 class BeatDict:
     "Manage heartbeat dictionary"
 

@@ -1,3 +1,4 @@
+import requests
 from flask import Blueprint, request
 from .schemas import NeighborSchema
 from raft_service.modules.cluster.cluster import Cluster
@@ -36,8 +37,15 @@ def add_neighbor():
     data = data.load(request.get_json()).data
     host = data['host']
     port = data['port']
-
-    pass
+    # add node
+    index = cluster.neighbors.__len__() + 1
+    node = Node(host, port, index)
+    node.setState('Follower')
+    cluster.add_node(node)
+    url = "http://"+host+":"+port+"/api/raft/update_neighbor"
+    neighbors = cluster.get_neighbors()
+    r = requests.post(url, data={neighbors})
+    return APIResponse(data={"nodes": neighbors}, status=200)
 
 
 @mod.route('/neighbor', methods=['DELETE'], strict_slashes=False)
@@ -49,3 +57,8 @@ def remove_neighbor():
 def get_neighbors():
     neighbors = cluster.get_neighbors()
     return APIResponse(data=neighbors, status=200)
+
+
+@mod.route('/update_neighbor', methods=['POST'], strict_slashes=False)
+def update_upon_add():
+    pass

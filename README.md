@@ -46,3 +46,9 @@ http {
     }
 }
 ```
+
+#### Reference
+- https://raft.github.io/
+- https://github.com/streed/simpleRaft
+- http://thesecretlivesofdata.com/raft/
+- https://www.geeksforgeeks.org/raft-consensus-algorithm/

@@ -44,13 +44,16 @@ def add_neighbor():
     cluster.add_node(node)
     url = "http://"+host+":"+port+"/api/raft/update_neighbor"
     neighbors = cluster.get_neighbors()
+    # send request to update the Node with respect to the Leader
     r = requests.post(url, data={neighbors})
     return APIResponse(data={"nodes": neighbors}, status=200)
 
 
-@mod.route('/neighbor', methods=['DELETE'], strict_slashes=False)
-def remove_neighbor():
-    pass
+@mod.route('/neighbor/<neighbor_id>', methods=['DELETE'], strict_slashes=False)
+def remove_neighbor(neighbor_id):
+    neighbors = cluster.remove_neighbor(neighbor_id)
+    return APIResponse(data=neighbors, status=200)
+
 
 
 @mod.route('/neighbor', methods=['GET'], strict_slashes=False)

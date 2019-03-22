@@ -16,6 +16,7 @@ class Cluster:
             if neighbor.nodeId == nodeId:
                 self.neighbors.remove(neighbor)
                 break
+        return self.neighbors
 
     def get_neighbors(self):
         my_neighbors = [self.node_json(neighbor) for neighbor in self.neighbors]

@@ -9,9 +9,9 @@ def send_heart_beat(cluster):
     heartbeat_socket = socket(AF_INET, SOCK_DGRAM)
 
     while 1:
-        neighbors = [neighbors for neighbors in cluster.get_neighbors() if neighbors.state != 'Leader']
+        neighbors = [neighbors for neighbors in cluster.get_neighbors() if neighbors.get('state') != 'Leader']
         for neighbor in range(len(neighbors)):
-            heartbeat_socket.sendto(str.encode(str(cluster.get_neighbors())), (neighbor.host, port))
+            heartbeat_socket.sendto(str.encode(str(cluster.get_neighbors())), (neighbor.get('host'), port))
         if __debug__:
             print(f"Time: {ctime(time())}")
         sleep(BEATWAIT)

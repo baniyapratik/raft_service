@@ -1,3 +1,4 @@
+import threading
 import requests
 from flask import Blueprint, request
 from .schemas import NeighborSchema
@@ -27,7 +28,9 @@ def initiate():
     node.setState('Leader')
     cluster.add_node(node)
     # Initiate the leader heartbeat
-    heartbeat_job.send_heart_beat(cluster)
+    t = threading.Thread(target=heartbeat_job.send_heart_beat(cluster))
+    t.daemon = True
+    t.start()
     return APIResponse(data={"Leader Initiated"}, status=200)
 
 
